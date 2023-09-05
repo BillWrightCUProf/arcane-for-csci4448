@@ -19,14 +19,6 @@ public abstract class Room {
     this.creatures = new ArrayList<>();
   }
 
-  public int getRow() {
-    return row;
-  }
-
-  public int getColumn() {
-    return column;
-  }
-
   public List<Room> getConnectedRooms() {
     return connectedRooms;
   }

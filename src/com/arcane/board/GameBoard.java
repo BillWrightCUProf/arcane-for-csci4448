@@ -91,7 +91,7 @@ public class GameBoard {
     Room startingRoom = this.roomMap.get(Constants.STARTING_ROOM_ID);
     String border = "+" + "-".repeat(roomWidth) + "+";
     String characterString = getCharacterString(startingRoom, roomWidth);
-    String roomContents = "|" + characterString + " |";
+    String roomContents = "|" + characterString + "|";
     System.out.println(border);
     System.out.println(roomContents);
     System.out.println(border);
@@ -112,7 +112,7 @@ public class GameBoard {
       for (int column = 0; column < Constants.VERTICAL_ROOMS; column++) {
         Room room = this.roomMap.get(element.name() + "-" + row + "-" + column);
         String characterString = getCharacterString(room, roomWidth);
-        System.out.print("| " + characterString);
+        System.out.print("|" + characterString);
       }
       System.out.println("|");
     }
@@ -122,8 +122,9 @@ public class GameBoard {
   private String getCharacterString(Room room, int roomWidth) {
     String characters =
         getAdventurersInRoom(room.getAdventurers()) + ":" + getCreaturesInRoom(room.getCreatures());
-    int padding = (roomWidth - characters.length()) / 2;
-    return " ".repeat(padding) + characters + " ".repeat(padding);
+    int lPadding = (roomWidth - characters.length()) / 2;
+    int rPadding = roomWidth - characters.length() - lPadding;
+    return " ".repeat(lPadding) + characters + " ".repeat(rPadding);
   }
 
   // the input parameter is a list of adventurers in a particular room

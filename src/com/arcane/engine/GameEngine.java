@@ -61,11 +61,10 @@ public class GameEngine {
         case ZEPHYRAL -> zephyralCount++;
       }
     }
-    System.out.println("FireBorns - " + fireBornCount + " Remaining");
-    System.out.println("TerraVores - " + terraVoreCount + " Remaining");
-    System.out.println("Aquarids - " + aquaridCount + " Remaining");
-    System.out.println("Zephyrals - " + zephyralCount + " Remaining");
-    System.out.println();
+    System.out.printf("FireBorns - %d Remaining%n", fireBornCount);
+    System.out.printf("TerraVores - %d Remaining%n", terraVoreCount);
+    System.out.printf("Aquarids - %d Remaining%n", aquaridCount);
+    System.out.printf("Zephyrals - %d Remaining%n%n", zephyralCount);
   }
 
   // Helper method to print adventurers status
