@@ -61,7 +61,9 @@ public abstract class Creature extends Character {
       // Fight if adventurer is alive
       if (adventurer.isAlive()) {
         if (this.combatRoll() > adventurer.combatRoll()) {
-          adventurer.takeDamage();
+          if (adventurer.isDodgeSuccessful()) {
+            adventurer.takeDamage();
+          }
         } else if (adventurer.combatRoll() > this.combatRoll()) {
           // if creature loses then remove from the current room and end fighting
           gameBoard.getRoom(this.currentRoomId).removeCreature(this);

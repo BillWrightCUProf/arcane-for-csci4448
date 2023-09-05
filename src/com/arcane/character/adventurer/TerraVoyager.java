@@ -3,8 +3,7 @@ package com.arcane.character.adventurer;
 import com.arcane.Element;
 
 public class TerraVoyager extends Adventurer {
-
-  private boolean isResonance = false;
+  private int bonusHealth = 0;
 
   public TerraVoyager() {
     super(7, 10, Element.EARTH, Element.FIRE, AdventurerAcronym.TERRA_VOYAGER);
@@ -12,22 +11,35 @@ public class TerraVoyager extends Adventurer {
 
   @Override
   protected void elementalResonance() {
-    isResonance = true;
-    this.addHealth(3);
+    this.bonusHealth = 3;
   }
 
   @Override
   protected void elementalDiscord() {
-    isResonance = false;
-    this.addHealth(-3);
+    this.bonusHealth = -3;
   }
 
   @Override
   protected void elementalReset() {
-    if (isResonance) {
-      this.addHealth(-3);
+    this.bonusHealth = 0;
+  }
+
+  @Override
+  public boolean isAlive() {
+    return (bonusHealth + this.getHealth() > 0);
+  }
+
+  @Override
+  public void takeDamage() {
+    if (bonusHealth > 0) {
+      bonusHealth--;
     } else {
-      this.addHealth(+3);
+      super.takeDamage();
     }
+  }
+
+  @Override
+  public int getHealth() {
+    return Math.max(super.getHealth() + bonusHealth, 0);
   }
 }

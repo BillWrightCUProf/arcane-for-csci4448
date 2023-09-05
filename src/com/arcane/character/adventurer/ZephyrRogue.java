@@ -21,5 +21,4 @@ public class ZephyrRogue extends Adventurer {
   protected void elementalReset() {
     this.setBaseTreasureRoll(0);
   }
-
 }

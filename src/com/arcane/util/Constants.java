@@ -3,7 +3,7 @@ package com.arcane.util;
 import java.util.Map;
 
 public class Constants {
-  public static final int TREASURE_COUNT_FOR_VICTORY = 10;
+  public static final int TREASURE_COUNT_FOR_VICTORY = 50;
   public static final int VERTICAL_ROOMS = 3;
   public static final int HORIZONTAL_ROOMS = 3;
   public static final String ALL_CREATURES_KILLED =

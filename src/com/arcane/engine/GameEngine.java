@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine {
-  private static final int TREASURE_COUNT_FOR_VICTORY = Constants.TREASURE_COUNT_FOR_VICTORY;
-  private final List<Adventurer> adventurers = new ArrayList<>();
+  private List<Adventurer> adventurers;
   private GameBoard gameBoard;
   private int turn;
 
@@ -18,6 +17,7 @@ public class GameEngine {
   // Game initialization - create new board, set turn to 0, populate adventures and creatures
   public void initialiseGame() {
     gameBoard = new GameBoard();
+    adventurers = new ArrayList<>();
     this.turn = 0;
     this.adventurers.addAll(gameBoard.getRoom(Constants.STARTING_ROOM_ID).getAdventurers());
     this.creatures = gameBoard.getRemainingCreatures();
@@ -35,10 +35,10 @@ public class GameEngine {
     return printGameResults();
   }
 
-  private void printGame(Boolean shouldPrint) {
+  private void printGame(boolean shouldPrint) {
     if (shouldPrint) {
       System.out.println("----------Turn-" + turn + "----------");
-      gameBoard.printBoard();
+      gameBoard.renderBoard();
       printAdventurersStatus();
       printCreaturesStatus();
       turn++;
@@ -48,28 +48,23 @@ public class GameEngine {
 
   // Helper method to print creature status
   private void printCreaturesStatus() {
-    int orbiterCount = 0;
-    int seekerCount = 0;
-    int blinkerCount = 0;
+    int fireBornCount = 0;
+    int aquaridCount = 0;
+    int terraVoreCount = 0;
+    int zephyralCount = 0;
     this.creatures = gameBoard.getRemainingCreatures();
     for (Creature creature : creatures) {
-      switch (creature.getClass().getSimpleName()) {
-        case "Orbiter":
-          orbiterCount++;
-          break;
-        case "Seeker":
-          seekerCount++;
-          break;
-        case "Blinker":
-          blinkerCount++;
-          break;
-        default:
-          break;
+      switch (creature.getAcronym()) {
+        case FIREBORN -> fireBornCount++;
+        case TERRAVORE -> terraVoreCount++;
+        case AQUARID -> aquaridCount++;
+        case ZEPHYRAL -> zephyralCount++;
       }
     }
-    System.out.println("Orbiters - " + orbiterCount + " Remaining");
-    System.out.println("Seekers - " + seekerCount + " Remaining");
-    System.out.println("Blinkers - " + blinkerCount + " Remaining");
+    System.out.println("FireBorns - " + fireBornCount + " Remaining");
+    System.out.println("TerraVores - " + terraVoreCount + " Remaining");
+    System.out.println("Aquarids - " + aquaridCount + " Remaining");
+    System.out.println("Zephyrals - " + zephyralCount + " Remaining");
     System.out.println();
   }
 
@@ -81,8 +76,8 @@ public class GameEngine {
               + " - "
               + adventurer.getTreasureCount()
               + " Treasure(s) - "
-              + (3 - adventurer.getHealth())
-              + " Damage");
+              + (adventurer.getHealth())
+              + " Health Remaining");
     }
     System.out.println();
   }
@@ -108,8 +103,8 @@ public class GameEngine {
 
   public boolean isGameOver() {
     return creatures.isEmpty()
-        || gameBoard.isAnyAdventurerAlive(adventurers)
-        || gameBoard.getTotalTreasureCount(adventurers) >= TREASURE_COUNT_FOR_VICTORY;
+        || gameBoard.areAllAdventuresDead(adventurers)
+        || gameBoard.getTotalTreasureCount(adventurers) >= Constants.TREASURE_COUNT_FOR_VICTORY;
   }
 
   public String printGameResults() {
@@ -118,11 +113,11 @@ public class GameEngine {
       System.out.println(Constants.ALL_CREATURES_KILLED);
       return Constants.ALL_CREATURES_KILLED;
       // Game ends if all adventurers are dead
-    } else if (gameBoard.isAnyAdventurerAlive(adventurers)) {
+    } else if (gameBoard.areAllAdventuresDead(adventurers)) {
       System.out.println(Constants.ALL_ADVENTURERS_KILLED);
       return Constants.ALL_ADVENTURERS_KILLED;
       // Game ends If 10 treasures are found
-    } else if (gameBoard.getTotalTreasureCount(adventurers) >= TREASURE_COUNT_FOR_VICTORY) {
+    } else if (gameBoard.getTotalTreasureCount(adventurers) >= Constants.TREASURE_COUNT_FOR_VICTORY) {
       System.out.println(Constants.ALL_TREASURES_FOUND);
       return Constants.ALL_TREASURES_FOUND;
     }

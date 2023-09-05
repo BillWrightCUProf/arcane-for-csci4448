@@ -64,7 +64,7 @@ public class GameBoard {
 
   private void addCreatures() {
     List<Creature> creatures = new ArrayList<>();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
       creatures.add(new FireBorn());
       creatures.add(new Aquarid());
       creatures.add(new TerraVore());
@@ -78,32 +78,52 @@ public class GameBoard {
     return roomMap.get(currentRoomId);
   }
 
-  // iterates through each room and prints the details in following format
-  // { Room Co-ordinates } : { Adventurers in room } : { Creatures in room }
-  public void printBoard() {
-    int i = 0;
-    for (Map.Entry<String, Room> entry : this.roomMap.entrySet()) {
-      if (i % 3 != 0) {
-        System.out.print(
-            entry.getKey()
-                + " : "
-                + getAdventurersInRoom(entry.getValue().getAdventurers())
-                + " : "
-                + getCreaturesInRoom(entry.getValue().getCreatures())
-                + " | ");
-      } else {
-        System.out.println(
-            entry.getKey()
-                + " : "
-                + getAdventurersInRoom(entry.getValue().getAdventurers())
-                + " : "
-                + getCreaturesInRoom(entry.getValue().getCreatures())
-                + " ");
-      }
-      if (i % 9 == 0) System.out.println();
-      i++;
+  public void renderBoard() {
+    int roomWidth = 30;
+    renderStartingRoom(roomWidth);
+    for (Element element : Element.values()) {
+      renderElementalFloors(roomWidth, element);
     }
-    System.out.println();
+  }
+
+  private void renderStartingRoom(int roomWidth) {
+    System.out.println("Starting Room:");
+    Room startingRoom = this.roomMap.get(Constants.STARTING_ROOM_ID);
+    String border = "+" + "-".repeat(roomWidth) + "+";
+    String characterString = getCharacterString(startingRoom, roomWidth);
+    String roomContents = "|" + characterString + " |";
+    System.out.println(border);
+    System.out.println(roomContents);
+    System.out.println(border);
+  }
+
+  private void renderElementalFloors(int roomWidth, Element element) {
+    System.out.println(element.name() + " Floor:");
+    String border =
+        "+"
+            + "-".repeat(roomWidth)
+            + "+"
+            + "-".repeat(roomWidth)
+            + "+"
+            + "-".repeat(roomWidth)
+            + "+";
+    for (int row = 0; row < Constants.HORIZONTAL_ROOMS; row++) {
+      System.out.println(border);
+      for (int column = 0; column < Constants.VERTICAL_ROOMS; column++) {
+        Room room = this.roomMap.get(element.name() + "-" + row + "-" + column);
+        String characterString = getCharacterString(room, roomWidth);
+        System.out.print("| " + characterString);
+      }
+      System.out.println("|");
+    }
+    System.out.println(border);
+  }
+
+  private String getCharacterString(Room room, int roomWidth) {
+    String characters =
+        getAdventurersInRoom(room.getAdventurers()) + ":" + getCreaturesInRoom(room.getCreatures());
+    int padding = (roomWidth - characters.length()) / 2;
+    return " ".repeat(padding) + characters + " ".repeat(padding);
   }
 
   // the input parameter is a list of adventurers in a particular room
@@ -115,7 +135,9 @@ public class GameBoard {
         adventurersPresent.append(adventurer.getAcronym().acronym).append(",");
       }
     }
-    return (adventurersPresent.length() == 0) ? "-" : adventurersPresent.substring(0,adventurersPresent.length()-1);
+    return (adventurersPresent.length() == 0)
+        ? "-"
+        : adventurersPresent.substring(0, adventurersPresent.length() - 1);
   }
 
   // the input parameter is a list of creatures in a particular room
@@ -125,7 +147,9 @@ public class GameBoard {
     for (Creature creature : creatures) {
       creaturesPresent.append(creature.getAcronym().acronym).append(",");
     }
-    return (creaturesPresent.length() == 0) ? "-" : creaturesPresent.substring(0,creaturesPresent.length()-1);
+    return (creaturesPresent.length() == 0)
+        ? "-"
+        : creaturesPresent.substring(0, creaturesPresent.length() - 1);
   }
 
   // iterates through each room and returns a list of creatures still alive
@@ -137,12 +161,13 @@ public class GameBoard {
 
   // returns true if even one adventurer is alive
   // returns false if all adventurers are dead
-  public boolean isAnyAdventurerAlive(List<Adventurer> adventurers) {
-    boolean isAlive = false;
+  public boolean areAllAdventuresDead(List<Adventurer> adventurers) {
     for (Adventurer adventurer : adventurers) {
-      isAlive = isAlive || adventurer.isAlive();
+      if (adventurer.isAlive()) {
+        return false;
+      }
     }
-    return isAlive;
+    return true;
   }
 
   // returns a cumulative count of treasures found by all adventurers
