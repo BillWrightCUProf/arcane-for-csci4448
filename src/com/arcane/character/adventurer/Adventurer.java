@@ -21,6 +21,7 @@ public abstract class Adventurer extends Character {
   private int baseTreasureRoll = 0;
   private int baseCombatRoll = 0;
   private int health;
+  private int creatureDamage = 2;
 
   protected Adventurer(
       int health,
@@ -122,8 +123,16 @@ public abstract class Adventurer extends Character {
     return Math.max(health, 0);
   }
 
+  public int getCreatureDamage() {
+    return creatureDamage;
+  }
+
+  public void setCreatureDamage(int creatureDamage) {
+    this.creatureDamage = creatureDamage;
+  }
+
   public void takeDamage() {
-    health -= 2;
+    health -= creatureDamage;
   }
 
   public boolean isAlive() {

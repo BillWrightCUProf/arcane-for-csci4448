@@ -64,7 +64,7 @@ public class GameBoard {
 
   private void addCreatures() {
     List<Creature> creatures = new ArrayList<>();
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 4; i++) {
       creatures.add(new FireBorn());
       creatures.add(new Aquarid());
       creatures.add(new TerraVore());
