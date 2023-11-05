@@ -22,6 +22,7 @@ public class GameBoard {
     roomMap = new LinkedHashMap<>();
     Map<Element, Floor> elementalFloors = createElementalFloors();
     StartingRoom startingRoom = createStartingRoom(elementalFloors);
+    addStartingRoomConnections(elementalFloors, startingRoom);
     populateRoomMap(startingRoom, elementalFloors);
   }
 
@@ -33,6 +34,15 @@ public class GameBoard {
           roomMap.put(room.getRoomId(), room);
         }
       }
+    }
+  }
+
+  private void addStartingRoomConnections(
+      Map<Element, Floor> elementalFloors, StartingRoom startingRoom) {
+    for (Floor floor : elementalFloors.values()) {
+      Room room = floor.getRoom(Constants.VERTICAL_ROOMS / 2, Constants.HORIZONTAL_ROOMS / 2);
+      List<Room> connectedRooms = room.getConnectedRooms();
+      connectedRooms.add(startingRoom);
     }
   }
 
