@@ -5,10 +5,11 @@ import com.arcane.board.rooms.Room;
 import com.arcane.board.rooms.StartingRoom;
 import com.arcane.character.adventurer.*;
 import com.arcane.character.creature.*;
+import com.arcane.observer.Subject;
 import com.arcane.util.Constants;
 import java.util.*;
 
-public class GameBoard {
+public class GameBoard extends Subject {
 
   private Map<String, Room> roomMap;
 
@@ -16,6 +17,11 @@ public class GameBoard {
     initialiseBoard();
     addAdventures();
     addCreatures();
+  }
+
+  // called by the engine whenever a complete turn is over
+  public void turnIsOver() {
+    notifyObservers();
   }
 
   private void initialiseBoard() {

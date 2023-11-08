@@ -3,6 +3,7 @@ package com.arcane.engine;
 import com.arcane.board.GameBoard;
 import com.arcane.character.adventurer.Adventurer;
 import com.arcane.character.creature.Creature;
+import com.arcane.ui.ConsoleGameDisplay;
 import com.arcane.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,12 @@ public class GameEngine {
   // Game initialization - create new board, set turn to 0, populate adventures and creatures
   public void initialiseGame() {
     gameBoard = new GameBoard();
+
+    // Add any observers of the game board here.
+    // Note that we don't have to keep a reference to ConsoleGameDisplay.
+    // What would we do with that display?
+    new ConsoleGameDisplay(gameBoard);
+
     adventurers = new ArrayList<>();
     this.turn = 0;
     this.adventurers.addAll(gameBoard.getRoom(Constants.STARTING_ROOM_ID).getAdventurers());
@@ -98,6 +105,9 @@ public class GameEngine {
         break;
       }
     }
+
+    // Tell game board that the turn is over
+    gameBoard.turnIsOver();
   }
 
   public boolean isGameOver() {
