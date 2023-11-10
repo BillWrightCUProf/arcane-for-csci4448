@@ -4,6 +4,7 @@ import com.arcane.character.adventurer.Adventurer;
 import com.arcane.character.creature.Creature;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class Room {
   protected final int row;
@@ -54,4 +55,17 @@ public abstract class Room {
   }
 
   public abstract String getRoomId();
+
+  public String toString() {
+    String joinedAdventurers = adventurers
+            .stream()
+            .filter(adventurer -> adventurer.isAlive())
+            .map(adventurer -> adventurer.toString())
+            .collect(Collectors.joining(", "));
+    String joinedCreatures = creatures
+            .stream()
+            .map(adventurer -> adventurer.toString())
+            .collect(Collectors.joining(", "));
+    return joinedAdventurers + ":" + joinedCreatures;
+  }
 }

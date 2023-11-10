@@ -1,12 +1,14 @@
 package com.arcane.engine;
 
 import com.arcane.board.GameBoard;
+import com.arcane.character.Character;
 import com.arcane.character.adventurer.Adventurer;
 import com.arcane.character.creature.Creature;
 import com.arcane.ui.ConsoleGameDisplay;
 import com.arcane.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameEngine {
   private List<Adventurer> adventurers;
@@ -31,26 +33,34 @@ public class GameEngine {
   }
 
   public String simulateGame(Boolean shouldPrint) {
-    printGame(shouldPrint);
-    // Run the game until game over condition is achieved
     while (!isGameOver()) {
-      // perform a turn and then print board
       performTurn();
-      printGame(shouldPrint);
     }
-    // If game ends print results
+    // This is probably better done with a notify as well.
+    // The engine probably shouldn't know about any display aspects
     return printGameResults();
   }
 
-  private void printGame(boolean shouldPrint) {
-    if (shouldPrint) {
-      System.out.println("----------Turn-" + turn + "----------");
-      gameBoard.renderBoard();
-      printAdventurersStatus();
-      printCreaturesStatus();
-      turn++;
-      System.out.println();
-    }
+//  private void printGame(boolean shouldPrint) {
+//    if (shouldPrint) {
+//      System.out.println("----------Turn-" + turn + "----------");
+//      gameBoard.renderBoard();
+//      printAdventurersStatus();
+//      printCreaturesStatus();
+//      // What the heck is this? Updating turn in the printGame method??!! NO!
+//      turn++;
+//      System.out.println();
+//    }
+//  }
+
+  public String toString() {
+    StringBuilder representation = new StringBuilder("----------Turn-" + turn + "----------\n");
+    representation
+            .append(gameBoard.toString())
+            .append(generateAdventurersStatus())
+            .append(generateCreaturesStatus())
+            .append("\n");
+    return representation.toString();
   }
 
   // Helper method to print creature status
@@ -78,6 +88,7 @@ public class GameEngine {
   private void printAdventurersStatus() {
     for (Adventurer adventurer : adventurers) {
       System.out.println(
+              // What's going on here? ths should all be in the Adventurer toString() method
           adventurer.getClass().getSimpleName()
               + " - "
               + adventurer.getTreasureCount()
@@ -88,9 +99,25 @@ public class GameEngine {
     System.out.println();
   }
 
+  private String generateAdventurersStatus() {
+    return generateCharactersStatus(adventurers);
+  }
+
+  private String generateCreaturesStatus() {
+    return generateCharactersStatus(creatures);
+  }
+
+  private String generateCharactersStatus(List<? extends Character> characters) {
+    return characters
+            .stream()
+            .map(character -> character.toString())
+            .collect(Collectors.joining(""));
+  }
+
   // Step1: Perform action for all adventurers while checking if game over is achieved
   // Step2: Perform action for all creatures while checking if game over is achieved
   public void performTurn() {
+    turn++;
     for (Adventurer adventurer : adventurers) {
       adventurer.performAction(gameBoard);
       creatures = gameBoard.getRemainingCreatures();

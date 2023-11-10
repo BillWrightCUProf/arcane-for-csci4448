@@ -4,8 +4,12 @@ import com.arcane.Element;
 import com.arcane.board.rooms.ElementalRoom;
 import com.arcane.board.rooms.Room;
 import com.arcane.util.Constants;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.center;
 
 public class Floor {
   private final Room[][] rooms;
@@ -53,5 +57,33 @@ public class Floor {
 
   public Room[][] getRooms() {
     return rooms;
+  }
+
+  private String generateBorder(Integer roomWidth) {
+    String border = "+";
+    for (int row = 0; row < Constants.HORIZONTAL_ROOMS; row++) {
+      border += "-".repeat(roomWidth) + "+";
+    }
+    return border;
+  }
+  public String toString(Integer roomWidth) {
+    StringBuilder representation = new StringBuilder(element.name() + " Floor:\n");
+    String border = generateBorder(roomWidth);
+    for (int row = 0; row < Constants.HORIZONTAL_ROOMS; row++) {
+      representation.append(border);
+      for (int column = 0; column < Constants.VERTICAL_ROOMS; column++) {
+        Room room = rooms[row][column];
+        representation.append("|");
+        representation.append(center(room.toString(), roomWidth));
+      }
+      representation.append("|");
+    }
+    representation.append(border);
+    return representation.toString();
+  }
+
+  public String toString() {
+    int roomWidth = 30;
+    return toString(roomWidth);
   }
 }

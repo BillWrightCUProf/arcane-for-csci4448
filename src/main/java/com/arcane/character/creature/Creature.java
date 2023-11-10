@@ -72,4 +72,8 @@ public abstract class Creature extends Character {
       }
     }
   }
+
+  public String toString() {
+    return acronym.toString();
+  }
 }

@@ -174,4 +174,8 @@ public abstract class Adventurer extends Character {
   protected abstract void elementalDiscord();
 
   protected abstract void elementalReset();
+
+  public String toString() {
+    return acronym.toString();
+  }
 }
