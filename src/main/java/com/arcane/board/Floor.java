@@ -64,7 +64,7 @@ public class Floor {
     for (int row = 0; row < Constants.HORIZONTAL_ROOMS; row++) {
       border += "-".repeat(roomWidth) + "+";
     }
-    return border;
+    return border + "\n";
   }
   public String toString(Integer roomWidth) {
     StringBuilder representation = new StringBuilder(element.name() + " Floor:\n");
@@ -76,7 +76,7 @@ public class Floor {
         representation.append("|");
         representation.append(center(room.toString(), roomWidth));
       }
-      representation.append("|");
+      representation.append("|\n");
     }
     representation.append(border);
     return representation.toString();

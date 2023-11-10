@@ -108,9 +108,11 @@ public class GameBoard extends Subject {
     Room startingRoom = this.roomMap.get(Constants.STARTING_ROOM_ID);
     representation.append("Starting Room:\n");
     representation.append(startingRoom.toString());
+    representation.append("\n");
     for (Floor floor : elementalFloors.values()) {
       representation.append(floor);
     }
+    representation.append("\n");
     return representation.toString();
   }
 
