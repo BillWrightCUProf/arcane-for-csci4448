@@ -83,7 +83,7 @@ public class Floor {
   }
 
   public String toString() {
-    int roomWidth = 30;
+    int roomWidth = 50;
     return toString(roomWidth);
   }
 }
