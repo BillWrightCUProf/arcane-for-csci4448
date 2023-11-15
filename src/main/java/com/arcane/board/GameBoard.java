@@ -95,14 +95,6 @@ public class GameBoard extends Subject {
     return roomMap.get(currentRoomId);
   }
 
-//  public void renderBoard() {
-//    int roomWidth = 30;
-//    renderStartingRoom(roomWidth);
-//    for (Element element : Element.values()) {
-//      renderElementalFloors(roomWidth, element);
-//    }
-//  }
-
   public String toString() {
     StringBuilder representation = new StringBuilder();
     Room startingRoom = this.roomMap.get(Constants.STARTING_ROOM_ID);
@@ -115,73 +107,6 @@ public class GameBoard extends Subject {
     representation.append("\n");
     return representation.toString();
   }
-
-//  private void renderStartingRoom(int roomWidth) {
-//    System.out.println("Starting Room:");
-//    Room startingRoom = this.roomMap.get(Constants.STARTING_ROOM_ID);
-//    String border = "+" + "-".repeat(roomWidth) + "+";
-//    String characterString = getCharacterString(startingRoom, roomWidth);
-//    String roomContents = "|" + characterString + "|";
-//    System.out.println(border);
-//    System.out.println(roomContents);
-//    System.out.println(border);
-//  }
-
-//  private void renderElementalFloors(int roomWidth, Element element) {
-//    System.out.println(element.name() + " Floor:");
-//    String border =
-//        "+"
-//            + "-".repeat(roomWidth)
-//            + "+"
-//            + "-".repeat(roomWidth)
-//            + "+"
-//            + "-".repeat(roomWidth)
-//            + "+";
-//    for (int row = 0; row < Constants.HORIZONTAL_ROOMS; row++) {
-//      System.out.println(border);
-//      for (int column = 0; column < Constants.VERTICAL_ROOMS; column++) {
-//        Room room = this.roomMap.get(element.name() + "-" + row + "-" + column);
-//        String characterString = getCharacterString(room, roomWidth);
-//        System.out.print("|" + characterString);
-//      }
-//      System.out.println("|");
-//    }
-//    System.out.println(border);
-//  }
-
-//  private String getCharacterString(Room room, int roomWidth) {
-//    String characters =
-//        getAdventurersInRoom(room.getAdventurers()) + ":" + getCreaturesInRoom(room.getCreatures());
-//    int lPadding = (roomWidth - characters.length()) / 2;
-//    int rPadding = roomWidth - characters.length() - lPadding;
-//    return " ".repeat(lPadding) + characters + " ".repeat(rPadding);
-//  }
-
-  // the input parameter is a list of adventurers in a particular room
-  // return a concatenated string of abbreviations of the adventurers in the room
-//  public String getAdventurersInRoom(List<Adventurer> adventurers) {
-//    StringBuilder adventurersPresent = new StringBuilder();
-//    for (Adventurer adventurer : adventurers) {
-//      if (adventurer.isAlive()) {
-//        adventurersPresent.append(adventurer.getAcronym().acronym).append(",");
-//      }
-//    }
-//    return (adventurersPresent.length() == 0)
-//        ? "-"
-//        : adventurersPresent.substring(0, adventurersPresent.length() - 1);
-//  }
-
-  // the input parameter is a list of creatures in a particular room
-  // return a concatenated string of abbreviations of the creatures in the room
-//  public String getCreaturesInRoom(List<Creature> creatures) {
-//    StringBuilder creaturesPresent = new StringBuilder();
-//    for (Creature creature : creatures) {
-//      creaturesPresent.append(creature.getAcronym().acronym).append(",");
-//    }
-//    return (creaturesPresent.length() == 0)
-//        ? "-"
-//        : creaturesPresent.substring(0, creaturesPresent.length() - 1);
-//  }
 
   // iterates through each room and returns a list of creatures still alive
   public List<Creature> getRemainingCreatures() {

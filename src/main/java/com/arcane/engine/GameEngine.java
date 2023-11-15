@@ -41,18 +41,6 @@ public class GameEngine {
     return printGameResults();
   }
 
-//  private void printGame(boolean shouldPrint) {
-//    if (shouldPrint) {
-//      System.out.println("----------Turn-" + turn + "----------");
-//      gameBoard.renderBoard();
-//      printAdventurersStatus();
-//      printCreaturesStatus();
-//      // What the heck is this? Updating turn in the printGame method??!! NO!
-//      turn++;
-//      System.out.println();
-//    }
-//  }
-
   public String toString() {
     StringBuilder representation = new StringBuilder("----------Turn-" + turn + "----------\n");
     representation
