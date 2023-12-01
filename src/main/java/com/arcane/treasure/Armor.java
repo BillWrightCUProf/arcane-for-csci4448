@@ -5,14 +5,14 @@ public class Armor extends Treasure {
     public Armor() {
         super("Armor");
     }
-    @Override
-    public Boolean hasArmor() {
-        return true;
-    }
+//    @Override
+//    public Boolean isArmor() {
+//        return true;
+//    }
 
-    @Override
-    public Integer getCombatBonus() {
-        return 5;
-    }
+//    @Override
+//    public Integer getCombatBonus() {
+//        return 5;
+//    }
 
 }

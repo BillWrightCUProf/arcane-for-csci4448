@@ -7,17 +7,17 @@ public abstract class Treasure {
         this.name = name;
     }
 
-    Boolean hasArmor() {
-        return false;
-    };
+//    Boolean isArmor() {
+//        return false;
+//    };
 
-    Integer getCombatBonus() {
-        return 0;
-    };
-
-    Integer getHealthBonus() {
-        return 0;
-    };
+//    Integer getCombatBonus() {
+//        return 0;
+//    };
+//
+//    Integer getHealthBonus() {
+//        return 0;
+//    };
 
     public String toString() {
       return name;

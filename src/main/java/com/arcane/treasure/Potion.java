@@ -9,8 +9,8 @@ public class Potion extends Treasure {
         this.potionEffect = potionEffect;
     }
 
-    @Override
-    public Integer getHealthBonus() {
-        return potionEffect;
-    }
+//    @Override
+//    public Integer getHealthBonus() {
+//        return potionEffect;
+//    }
 }
