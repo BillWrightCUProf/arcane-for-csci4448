@@ -1,6 +1,5 @@
 package com.arcane.treasure;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +11,12 @@ public class TreasureBagTest {
     void setUp() {
         bag = new TreasureBag();
     }
+
     @Test
     void testAddTreasure() {
         bag.addTreasure(new Armor());
         bag.addTreasure(new Sword());
-        assert bag.getNumberTreasures() == 2;
+        assert bag.size() == 2;
     }
 
     @Test
@@ -26,6 +26,17 @@ public class TreasureBagTest {
         assert bag.getCombatBonus() == 5;
         bag.addTreasure(new Sword());
         assert bag.getCombatBonus() == 7;
+    }
+
+    @Test
+    void testNotAddingDuplicate() {
+        bag.addTreasure(new Armor());
+        bag.addTreasure(new Sword());
+        assert bag.size() == 2;
+
+        // Now let's test that we can't add duplicate
+        bag.addTreasure(new Armor());
+        assert bag.size() == 2;
     }
     @Test
     void testToString() {

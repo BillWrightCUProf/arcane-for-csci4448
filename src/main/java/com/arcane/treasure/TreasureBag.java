@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class TreasureBag {
     private List<Treasure> bag = new ArrayList<>();
 
-    Integer getNumberTreasures() {
+    Integer size() {
         return bag.size();
     }
 
@@ -19,6 +19,9 @@ public class TreasureBag {
     }
 
     void addTreasure(Treasure treasure) {
-        bag.add(treasure);
+        if (! bag.stream().map(Object::getClass).toList().contains(treasure.getClass())) {
+            System.out.println("Adding treasure " + treasure.toString() );
+            bag.add(treasure);
+        }
     }
 }
