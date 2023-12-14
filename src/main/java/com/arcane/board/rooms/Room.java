@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Room {
-  protected final int row;
-  protected final int column;
+  public final int row;
+  public final int column;
   protected final List<Adventurer> adventurers;
   protected final List<Creature> creatures;
   protected List<Room> connectedRooms;
